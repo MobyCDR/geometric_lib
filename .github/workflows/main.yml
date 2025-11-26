@@ -1,6 +1,7 @@
-name: Tests
+name: Run Tests
 
-on: [push]
+on:
+  push:
 
 jobs:
   test:
@@ -10,8 +11,13 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    - run: python -m unittest discover
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Run tests
+        run: |
+          python -m unittest discover -s tests -p "test_*.py"
